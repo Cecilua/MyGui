@@ -8,8 +8,11 @@ import java.awt.Color;
  */
 public class MyGui
 {
-    // instance variables - replace the example below with your own
+    // instance variables 
     private double speed;
+    
+    // fields to remember the pressed position
+    private double startX, startY;
 
     /**
      * Constructor for objects of class MyGui
@@ -22,7 +25,12 @@ public class MyGui
         // set up buttons 
         UI.addButton("quit", UI::quit);
         
+        // set up slider 
         UI.addSlider("speed", 0, 100, 20, this::setSpeed);
+        
+        // set mouse listener 
+        UI.setLineWidth(10);
+        UI.setMouseListener(this::doMouse);
     }
 
     /**
@@ -40,5 +48,20 @@ public class MyGui
         
         // set the speed to the new speed
         this.speed = km; 
+    }
+    
+    /**
+     * Callback method for mouse listener 
+     * only make 1 callback method for mouse listener 
+     */
+    public void doMouse(String action, double x, double y) {
+        if (action.equals("pressed")) {
+            this.startX = x;
+            this.startY = y;
+        } else if (action.equals("released")) {
+            UI.drawLine(this.startX, this.startY, x, y);
+        } else if (action.equals("clicked")) {
+        
+        }
     }
 }
